@@ -1,0 +1,16 @@
+---
+# tasks file for podman_play directories
+
+- name: Verify if directory exist
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  register: __register_dir
+
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ podman_play_user }}"
+    group: "{{ podman_play_group }}"
+  when: not __register_dir.stat.exists | bool
