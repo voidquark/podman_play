@@ -1,0 +1,13 @@
+---
+# handlers file for podman_play
+
+- name: restart podman_play_app
+  ansible.builtin.systemd:
+    name: "pod-{{ podman_play_pod_name }}.service"
+    state: "restarted"
+    scope: "user"
+    daemon_reload: true
+    enabled: true
+  become_user: "{{ podman_play_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
