@@ -1,0 +1,94 @@
+---
+# defaults file for podman_play
+
+# DEFAULT - Variables
+
+podman_play_skip_user_and_group_creation: true
+podman_play_user: "{{ ansible_user_id }}"
+podman_play_group: "{{ ansible_user_id }}"
+podman_play_root_dir: "/home/{{ podman_play_user }}/{{ podman_play_pod_name }}"
+podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
+podman_play_pod_state: "created"
+podman_play_pod_recreate: true
+podman_play_systemd_no_header: true
+podman_play_systemd_restart_sec: "10"
+podman_play_systemd_restart_policy: "always"
+
+
+# REQUIRED - Variables
+# podman_play_pod_name: "dashy"
+# podman_play_pod_yaml_definition: |
+#   ---
+#   apiVersion: v1
+#   kind: Pod
+#   metadata:
+#     labels:
+#       app: "{{ podman_play_pod_name }}"
+#     name: "{{ podman_play_pod_name }}"
+#   spec:
+#     containers:
+#       - name: "{{ podman_play_pod_name }}"
+#         image: docker.io/lissy93/dashy:latest
+#         ports:
+#           - containerPort: 80
+#             hostPort: 9500
+#         stdin: true
+#         tty: true
+#         volumeMounts:
+#           - mountPath: /app/public/conf.yml:Z
+#             name: dashy_config
+#     volumes:
+#       - hostPath:
+#           path: "{{ podman_play_template_config_dir }}/conf.yml"
+#           type: File
+#         name: dashy_config
+
+
+# OPTIONAL - variables
+# podman_play_dirs:
+#   - "{{ podman_play_root_dir }}/var_www_html"
+#   - "{{ podman_play_root_dir }}/var_lib_mysql"
+
+# podman_play_firewalld_expose_ports:
+#   - "9500/tcp"
+#   - "9501/udp"
+
+# podman_play_custom_conf:
+#   - filename: "conf.yml"
+#     raw_content: |
+#       # Example Raw Config for conf.yml
+#   - filename: "another_config.conf"
+#     raw_content: |
+#       # Example Raw Config for another_config.conf
+
+# More about possible values in https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_play_module.html
+# podman_play_pod_authfile: ""
+# podman_play_pod_build: ""
+# podman_play_pod_cert_dir: ""
+# podman_play_pod_configmap: ""
+# podman_play_pod_context_dir: ""
+# podman_play_pod_debug: ""
+# podman_play_pod_executable: ""
+# podman_play_pod_log_driver: ""
+# podman_play_pod_log_level: ""
+# podman_play_pod_network: ""
+# podman_play_pod_password: ""
+# podman_play_pod_username: ""
+# podman_play_pod_quiet: ""
+# podman_play_pod_seccomp_profile_root: ""
+# podman_play_pod_tls_verify: ""
+# podman_play_pod_userns: ""
+
+# More about possible values in https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_generate_systemd_module.html
+# podman_play_systemd_after: ""
+# podman_play_systemd_container_prefix: ""
+# podman_play_systemd_env: ""
+# podman_play_systemd_executable: ""
+# podman_play_systemd_force: ""
+# podman_play_systemd_pod_prefix: ""
+# podman_play_systemd_requires: ""
+# podman_play_systemd_separator: ""
+# podman_play_systemd_start_timeout: ""
+# podman_play_systemd_stop_timeout: ""
+# podman_play_systemd_use_names: ""
+# podman_play_systemd_wants: ""
