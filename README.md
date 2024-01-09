@@ -83,7 +83,7 @@ Restart policy of the pod systemd unit. Possible options include `no-restart`, `
 
 ### Required Variables
 
-These variables are essential for deployment. Below are only **example** values.
+The following variables are not set by default, but they are required for deployment. You will need to define these variables. Below are **example** values.
 
 ```yaml
 podman_play_pod_name: "dashy"
