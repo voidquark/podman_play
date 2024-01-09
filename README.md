@@ -9,8 +9,7 @@ Ansible Role designed to facilitate the deployment of root-less containerized ap
 - **🧩 Flexible Configuration**: Easily customize deployment configuration to match your specific requirements.
 
 Check out series of blog posts to discover how simple it is to use this role for deploying popular applications:
- - Deploy [Dashy](https://dashy.to/) 📢 **BLOG POST - Comming soon**
- - Deploy [Nextcloud](https://nextcloud.com/) 📢 **BLOG POST - Comming soon**
+ - Deploy [Dashy](https://dashy.to/), [Nextcloud](https://nextcloud.com/), [Hashi Vault](https://www.vaultproject.io/) 📢 **BLOG POST - Comming soon**
 
 ## Table of Content
 
