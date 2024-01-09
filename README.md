@@ -15,7 +15,7 @@ Explore the simplicity of deploying popular applications such as [Dashy](https:/
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
 - - [Default Variables - `defaults/main.yml`](#default-variables--defaultsmainyml)
-- - [Required Variables](#defaults-variables--requiredvariables)
+- - [Required Variables](#required-variables)
 - - [Optional Variables](#defaults-variables--optionalvariables)
 - [Playbook](#playbook)
 
