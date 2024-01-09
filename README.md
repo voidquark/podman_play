@@ -132,7 +132,7 @@ podman_play_custom_conf:
     raw_content: |
       # Example Raw Config for another_config.conf
 ```
-This variable allows you to deploy any number of configurations for your deployment. Content is always templated into the `podman_play_template_config_dir` directory.
+This variable allows you to deploy any number of configuration files for your deployment. Content is always templated into the `podman_play_template_config_dir` directory.
 
 ```yaml
 podman_play_dirs:
