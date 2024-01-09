@@ -1,5 +1,7 @@
 # Podman Play - Deploy Any App
 
+[![License](https://img.shields.io/github/license/voidquark/podman_play)](LICENSE)
+
 Ansible Role to deploy apps in root-less containers from a Kubernetes Pod YAML definition. The application pod runs as a systemd service, in your own user namespace.
 
 **🔑 Key Features**
