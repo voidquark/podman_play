@@ -34,7 +34,7 @@ Check out series of blog posts to discover how simple it is to use this role for
 ```yaml
 podman_play_user: "{{ ansible_user_id }}"
 ```
-OS user under which your pod app runs.
+OS user that runs your pod app. If not specified, it uses the user who executed the playbook.
 
 ```yaml
 podman_play_group: "{{ ansible_user_id }}"
