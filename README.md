@@ -8,8 +8,7 @@ Ansible Role to deploy apps in root-less containers from a Kubernetes Pod YAML d
 - **🔄 Idempotent deployment**: Role embraces idempotent deployment, ensuring that the state of your deployment always matches your desired inventory.
 - **🧩 Flexible Configuration**: Easily customize deployment configuration to match your specific requirements.
 
-Check out series of blog posts to discover how simple it is to use this role for deploying popular applications:
- - Deploy [Dashy](https://dashy.to/), [Nextcloud](https://nextcloud.com/), [Hashi Vault](https://www.vaultproject.io/) 📢 **BLOG POST - Comming soon**
+Explore the simplicity of deploying popular applications such as [Dashy](https://dashy.to/), [Nextcloud](https://nextcloud.com/), and [Hashi Vault](https://www.vaultproject.io/) with this role in the upcoming blog post. Stay tuned for more information – coming soon! 📢
 
 ## Table of Content
 
