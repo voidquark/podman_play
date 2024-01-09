@@ -1,6 +1,6 @@
 # Podman Play - Deploy Any App
 
-Ansible Role designed to facilitate the deployment of root-less containerized applications using Kubernetes Pod YAML definitions. The deployed pod applications run within the user namespace as systemd units.
+Ansible Role to deploy apps in root-less containers from a Kubernetes Pod YAML definition. The application pod runs as a systemd service, in your own user namespace.
 
 **🔑 Key Features**
 - **🚀 Deploy Any Application**: Easily deploy any application using a Kubernetes YAML pod definition.
