@@ -10,4 +10,4 @@
     enabled: true
   become_user: "{{ podman_play_user | default(ansible_user_id) }}"
   environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ __user_info.uid | default(ansible_user_uid) }}"
