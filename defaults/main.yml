@@ -3,10 +3,7 @@
 
 # DEFAULT - Variables
 
-podman_play_skip_user_and_group_creation: true
-podman_play_user: "{{ ansible_user_id }}"
-podman_play_group: "{{ ansible_user_id }}"
-podman_play_root_dir: "/home/{{ podman_play_user }}/{{ podman_play_pod_name }}"
+podman_play_root_dir: "/home/{{ podman_play_user | default(ansible_user_id) }}/{{ podman_play_pod_name }}"
 podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
 podman_play_pod_state: "created"
 podman_play_pod_recreate: true
@@ -45,6 +42,10 @@ podman_play_systemd_restart_policy: "always"
 
 
 # OPTIONAL - variables
+
+# podman_play_user: "dashy"
+# podman_play_group: "dashy"
+
 # podman_play_dirs:
 #   - "{{ podman_play_root_dir }}/var_www_html"
 #   - "{{ podman_play_root_dir }}/var_lib_mysql"

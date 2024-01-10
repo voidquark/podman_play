@@ -2,7 +2,9 @@
 # tasks file for podman_play
 
 - name: User and Group Management
-  when: not podman_play_skip_user_and_group_creation | bool
+  when:
+    - podman_play_user is defined
+    - podman_play_group is defined
   block:
     - name: Create the app specific group
       ansible.builtin.group:
@@ -36,8 +38,8 @@
   ansible.builtin.copy:
     content: "{{ custom_conf.raw_content }}"
     dest: "{{ podman_play_template_config_dir }}/{{ custom_conf.filename }}"
-    owner: "{{ podman_play_user }}"
-    group: "{{ podman_play_group }}"
+    owner: "{{ podman_play_user | default(ansible_user_id) }}"
+    group: "{{ podman_play_group | default(ansible_user_id) }}"
     mode: "0644"
   loop: "{{ podman_play_custom_conf }}"
   loop_control:
@@ -49,19 +51,19 @@
 
 - name: Check if app user is lingering
   ansible.builtin.stat:
-    path: "/var/lib/systemd/linger/{{ podman_play_user }}"
+    path: "/var/lib/systemd/linger/{{ podman_play_user | default(ansible_user_id) }}"
   register: __user_lingering
 
 - name: Enable lingering for user
-  ansible.builtin.command: "loginctl enable-linger {{ podman_play_user }}"
+  ansible.builtin.command: "loginctl enable-linger {{ podman_play_user | default(ansible_user_id) }}"
   when: not __user_lingering.stat.exists
 
 - name: Template kubernetes pod yaml definition
   ansible.builtin.copy:
     content: "{{ podman_play_pod_yaml_definition }}"
     dest: "{{ podman_play_root_dir }}/kubernetes_play.yml"
-    owner: "{{ podman_play_user }}"
-    group: "{{ podman_play_group }}"
+    owner: "{{ podman_play_user | default(ansible_user_id) }}"
+    group: "{{ podman_play_group | default(ansible_user_id) }}"
     mode: "0640"
   register: __kubernetes_yaml_task
   notify:
@@ -91,7 +93,7 @@
         state: "{{ podman_play_pod_state }}"
         tls_verify: "{{ podman_play_pod_tls_verify | default(omit) }}"
         userns: "{{ podman_play_pod_userns | default(omit) }}"
-      become_user: "{{ podman_play_user }}"
+      become_user: "{{ podman_play_user | default(ansible_user_id) }}"
       notify:
         - restart podman_play_app
 
@@ -99,7 +101,7 @@
       containers.podman.podman_generate_systemd:
         after: "{{ podman_play_systemd_after | default(omit) }}"
         container_prefix: "{{ podman_play_systemd_container_prefix | default(omit) }}"
-        dest: "/home/{{ podman_play_user }}/.config/systemd/user"
+        dest: "/home/{{ podman_play_user | default(ansible_user_id) }}/.config/systemd/user"
         env: "{{ podman_play_systemd_env | default(omit) }}"
         executable: "{{ podman_play_systemd_executable | default(omit) }}"
         force: "{{ podman_play_systemd_force | default(omit) }}"
@@ -114,7 +116,7 @@
         stop_timeout: "{{ podman_play_systemd_stop_timeout | default(omit) }}"
         use_names: "{{ podman_play_systemd_use_names | default(omit) }}"
         wants: "{{ podman_play_systemd_wants | default(omit) }}"
-      become_user: "{{ podman_play_user }}"
+      become_user: "{{ podman_play_user | default(ansible_user_id) }}"
       notify:
         - restart podman_play_app
 
@@ -138,6 +140,6 @@
     state: "started"
     scope: "user"
     enabled: true
-  become_user: "{{ podman_play_user }}"
+  become_user: "{{ podman_play_user | default(ansible_user_id) }}"
   environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ podman_play_user | default(ansible_user_id) }}"
