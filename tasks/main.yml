@@ -20,6 +20,7 @@
         system: false
         create_home: true
         state: present
+      register: __user_info
 
 # Directories ownership is modified only when the directory does not exist.
 # For more details, refer to: https://github.com/containers/podman/blob/main/troubleshooting.md#34-container-creates-a-file-that-is-not-owned-by-the-users-regular-uid
@@ -142,4 +143,4 @@
     enabled: true
   become_user: "{{ podman_play_user | default(ansible_user_id) }}"
   environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ __user_info.uid | default(ansible_user_uid) }}"
