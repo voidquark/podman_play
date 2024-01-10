@@ -33,24 +33,9 @@ Explore the simplicity of deploying popular applications such as [Dashy](https:/
 ### Default Variables - `defaults/main.yml`
 
 ```yaml
-podman_play_user: "{{ ansible_user_id }}"
+podman_play_root_dir: "/home/{{ podman_play_user | default(ansible_user_id) }}/{{ podman_play_pod_name }}"
 ```
-OS user that runs your pod app. If not specified, it uses the user who executed the playbook.
-
-```yaml
-podman_play_group: "{{ ansible_user_id }}"
-```
-OS group for the app user.
-
-```yaml
-podman_play_skip_user_and_group_creation: true
-```
-By default, skip user and group creation. The pod application will run under the user who executed the playbook by default.
-
-```yaml
-podman_play_root_dir: "/home/{{ podman_play_user }}/{{ podman_play_pod_name }}"
-```
-Default application root directory where configuration files, Kubernetes pod YAML definitions, and other directories are stored.
+Default application root directory where configuration files, Kubernetes pod YAML definitions, and other directories are stored. If not specified, it uses home of the user who executed the playbook.
 
 ```yaml
 podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
@@ -122,7 +107,17 @@ Define the Kubernetes pod YAML definition to be used by the `podman_play` module
 
 ### Optional Variables
 
-These optional variables are not required and are not set by default. You can use these variables to extend your deployment.
+These optional variables are not required and are not set by default. You can use these variables to extend your deployment. Below are **example** values.
+
+```yaml
+podman_play_user: "dashy"
+```
+OS user that runs your pod app. If not specified, it uses the user who executed the playbook.
+
+```yaml
+podman_play_group: "dashy"
+```
+OS group for the app user.
 
 ```yaml
 podman_play_custom_conf:
