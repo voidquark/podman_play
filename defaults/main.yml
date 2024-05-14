@@ -62,6 +62,8 @@ podman_play_systemd_restart_policy: "always"
 #     raw_content: |
 #       # Example Raw Config for another_config.conf
 
+# podman_play_auto_update: true
+
 # More about possible values in https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_play_module.html
 # podman_play_pod_authfile: ""
 # podman_play_pod_build: ""

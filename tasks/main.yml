@@ -121,6 +121,17 @@
       notify:
         - restart podman_play_app
 
+- name: Enable Podman auto update timer
+  ansible.builtin.systemd:
+    name: "podman-auto-update.timer"
+    state: "started"
+    scope: "user"
+    enabled: true
+  become_user: "{{ podman_play_user | default(ansible_user_id) }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ __user_info.uid | default(ansible_user_uid) }}"
+  when: podman_play_auto_update | bool
+
 - name: Enable firewalld rule to expose app port
   ansible.posix.firewalld:
     immediate: true
