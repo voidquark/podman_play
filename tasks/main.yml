@@ -70,57 +70,35 @@
   notify:
     - restart podman_play_app
 
-- name: Re-create app pod and generate fresh systemd
+- name: Create quadlet file from kubernetes yaml definition
+  containers.podman.podman_play:
+    annotation: "{{ podman_play_pod_annotation | default(omit) }}"
+    authfile: "{{ podman_play_pod_authfile | default(omit) }}"
+    build: "{{ podman_play_pod_build | default(omit) }}"
+    cert_dir: "{{ podman_play_pod_cert_dir | default(omit) }}"
+    configmap: "{{ podman_play_pod_configmap | default(omit) }}"
+    context_dir: "{{ podman_play_pod_context_dir | default(omit) }}"
+    debug: "{{ podman_play_pod_debug | default(omit) }}"
+    executable: "{{ podman_play_pod_executable | default(omit) }}"
+    kube_file: "{{ podman_play_root_dir }}/kubernetes_play.yml"
+    log_driver: "{{ podman_play_pod_log_driver | default(omit) }}"
+    log_level: "{{ podman_play_pod_log_level | default(omit) }}"
+    network: "{{ podman_play_pod_network | default(omit) }}"
+    password: "{{ podman_play_pod_password | default(omit) }}"
+    quadlet_dir: "{{ podman_play_pod_quadlet_dir | default(omit) }}"
+    quadlet_filename: "{{ podman_play_pod_name }}"
+    quadlet_options: "{{ podman_play_pod_quadlet_options | default(omit) }}"
+    username: "{{ podman_play_pod_username | default(omit) }}"
+    quiet: "{{ podman_play_pod_quiet | default(omit ) }}"
+    recreate: "{{ podman_play_pod_recreate | default(omit) }}"
+    seccomp_profile_root: "{{ podman_play_pod_seccomp_profile_root | default(omit) }}"
+    state: "{{ podman_play_pod_state }}"
+    tls_verify: "{{ podman_play_pod_tls_verify | default(omit) }}"
+    userns: "{{ podman_play_pod_userns | default(omit) }}"
+  become_user: "{{ podman_play_user | default(ansible_user_id) }}"
+  notify:
+    - restart podman_play_app
   when: __kubernetes_yaml_task is changed or __custom_conf_task is changed
-  block:
-    - name: Create app pod from kubernetes yaml definition
-      containers.podman.podman_play:
-        authfile: "{{ podman_play_pod_authfile | default(omit) }}"
-        build: "{{ podman_play_pod_build | default(omit) }}"
-        cert_dir: "{{ podman_play_pod_cert_dir | default(omit) }}"
-        configmap: "{{ podman_play_pod_configmap | default(omit) }}"
-        context_dir: "{{ podman_play_pod_context_dir | default(omit) }}"
-        debug: "{{ podman_play_pod_debug | default(omit) }}"
-        executable: "{{ podman_play_pod_executable | default(omit) }}"
-        kube_file: "{{ podman_play_root_dir }}/kubernetes_play.yml"
-        log_driver: "{{ podman_play_pod_log_driver | default(omit) }}"
-        log_level: "{{ podman_play_pod_log_level | default(omit) }}"
-        network: "{{ podman_play_pod_network | default(omit) }}"
-        password: "{{ podman_play_pod_password | default(omit) }}"
-        username: "{{ podman_play_pod_username | default(omit) }}"
-        quiet: "{{ podman_play_pod_quiet | default(omit ) }}"
-        recreate: "{{ podman_play_pod_recreate | default(omit) }}"
-        seccomp_profile_root: "{{ podman_play_pod_seccomp_profile_root | default(omit) }}"
-        state: "{{ podman_play_pod_state }}"
-        tls_verify: "{{ podman_play_pod_tls_verify | default(omit) }}"
-        userns: "{{ podman_play_pod_userns | default(omit) }}"
-      become_user: "{{ podman_play_user | default(ansible_user_id) }}"
-      notify:
-        - restart podman_play_app
-
-    - name: Generate systemd unit file for app pod
-      containers.podman.podman_generate_systemd:
-        after: "{{ podman_play_systemd_after | default(omit) }}"
-        container_prefix: "{{ podman_play_systemd_container_prefix | default(omit) }}"
-        dest: "/home/{{ podman_play_user | default(ansible_user_id) }}/.config/systemd/user"
-        env: "{{ podman_play_systemd_env | default(omit) }}"
-        executable: "{{ podman_play_systemd_executable | default(omit) }}"
-        force: "{{ podman_play_systemd_force | default(omit) }}"
-        name: "{{ podman_play_pod_name }}"
-        no_header: "{{ podman_play_systemd_no_header | default(omit) }}"
-        pod_prefix: "{{ podman_play_systemd_pod_prefix | default(omit) }}"
-        requires: "{{ podman_play_systemd_requires | default(omit) }}"
-        restart_policy: "{{ podman_play_systemd_restart_policy | default(omit) }}"
-        restart_sec: "{{ podman_play_systemd_restart_sec | default(omit) }}"
-        separator: "{{ podman_play_systemd_separator | default(omit) }}"
-        start_timeout: "{{ podman_play_systemd_start_timeout | default(omit) }}"
-        stop_timeout: "{{ podman_play_systemd_stop_timeout | default(omit) }}"
-        use_names: "{{ podman_play_systemd_use_names | default(omit) }}"
-        wants: "{{ podman_play_systemd_wants | default(omit) }}"
-        new: "{{ podman_play_systemd_new | default(omit) }}"
-      become_user: "{{ podman_play_user | default(ansible_user_id) }}"
-      notify:
-        - restart podman_play_app
 
 - name: Enable Podman auto update timer
   ansible.builtin.systemd:
@@ -149,7 +127,7 @@
 
 - name: Ensure that systemd app is started
   ansible.builtin.systemd:
-    name: "pod-{{ podman_play_pod_name }}.service"
+    name: "{{ podman_play_pod_name }}.service"
     state: "started"
     scope: "user"
     enabled: true

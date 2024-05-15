@@ -5,12 +5,8 @@
 
 podman_play_root_dir: "/home/{{ podman_play_user | default(ansible_user_id) }}/{{ podman_play_pod_name }}"
 podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
-podman_play_pod_state: "created"
+podman_play_pod_state: "quadlet"
 podman_play_pod_recreate: true
-podman_play_systemd_no_header: true
-podman_play_systemd_restart_sec: "10"
-podman_play_systemd_restart_policy: "always"
-
 
 # REQUIRED - Variables
 # podman_play_pod_name: "dashy"
@@ -81,18 +77,5 @@ podman_play_systemd_restart_policy: "always"
 # podman_play_pod_seccomp_profile_root: ""
 # podman_play_pod_tls_verify: ""
 # podman_play_pod_userns: ""
-
-# More about possible values in https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_generate_systemd_module.html
-# podman_play_systemd_after: ""
-# podman_play_systemd_container_prefix: ""
-# podman_play_systemd_env: ""
-# podman_play_systemd_executable: ""
-# podman_play_systemd_force: ""
-# podman_play_systemd_pod_prefix: ""
-# podman_play_systemd_requires: ""
-# podman_play_systemd_separator: ""
-# podman_play_systemd_start_timeout: ""
-# podman_play_systemd_stop_timeout: ""
-# podman_play_systemd_use_names: ""
-# podman_play_systemd_wants: ""
-# podman_play_systemd_new: ""
+# podman_play_pod_quadlet_dir: ""
+# podman_play_pod_quadlet_options: ""

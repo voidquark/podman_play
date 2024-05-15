@@ -2,11 +2,11 @@
 
 [![License](https://img.shields.io/github/license/voidquark/podman_play)](LICENSE)
 
-Ansible Role to deploy apps in root-less containers from a Kubernetes Pod YAML definition. The application pod runs as a systemd service, in your own user namespace.
+Ansible Role to deploy apps in root-less containers from a Kubernetes Pod YAML definition. The application pod runs as a systemd service using Podman Quadlet, in your own user namespace.
 
 **🔑 Key Features**
 - **🚀 Deploy Any Application**: Easily deploy any application using a Kubernetes YAML pod definition.
-- **🛡️ Root-less deployment**: Ensure secure containerization by running custom applications in a root-less mode within a user namespace. Management of the container is handled through a systemd unit.
+- **🛡️ Root-less deployment**: Ensure secure containerization by running custom applications in a root-less mode within a user namespace. Management of the container is handled through a Quadlet systemd unit.
 - **🔄 Idempotent deployment**: Role embraces idempotent deployment, ensuring that the state of your deployment always matches your desired inventory.
 - **🧩 Flexible Configuration**: Easily customize deployment configuration to match your specific requirements.
 
@@ -43,29 +43,14 @@ podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
 Default path where your custom application configs are templated from the `podman_play_custom_conf` variable.
 
 ```yaml
-podman_play_pod_state: "created"
+podman_play_pod_state: "quadlet"
 ```
-Ensure that the pod is in the created state. The systemd unit ensures that the pod is started. While there is no reason to change this value, modules also support `started` and `absent`.
+Ensure that the pod is in the quadlet state. This ensures that the Quadlet file is generated in the user namespace.
 
 ```yaml
 podman_play_pod_recreate: true
 ```
 This ensures that any change in the configuration file or Kubernetes pod YAML definition triggers pod recreation to apply the latest changes, such as an image tag change.
-
-```yaml
-podman_play_systemd_no_header: true
-```
-Do not generate the header, including metadata such as the Podman version and the timestamp, for the systemd file.
-
-```yaml
-podman_play_systemd_restart_sec: "10"
-```
-Configures the time to sleep before restarting a pod systemd unit.
-
-```yaml
-podman_play_systemd_restart_policy: "always"
-```
-Restart policy of the pod systemd unit. Possible options include `no-restart`, `on-success`, `on-failure`, `on-abnormal`, `on-watchdog`, `on-abort`, and `always`.
 
 ### Required Variables
 
@@ -146,7 +131,7 @@ List of ports in `port/tcp` or `port/udp` format that should be exposed via fire
 ```yaml
 podman_play_auto_update: true
 ```
-If you're using image tags without specific versions, such as `latest` or `stable`, you can enable the auto-update feature. However, to activate this feature, you need to annotate the pod YAML definition with `io.containers.autoupdate: registry`. Without this annotation, the auto-update won't take effect. It's worth noting that this feature is experimental for this role. For more details on how it works, check out the [documentation](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html#auto-updates-and-kubernetes-yaml).
+If you're using image tags without specific versions, such as `latest` or `stable`, you can enable the auto-update feature. However, to activate this feature, you need to annotate the pod YAML definition with `io.containers.autoupdate: registry`. Without this annotation, the auto-update won't take effect. For more details on how it works, check out the [documentation](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html#auto-updates-and-kubernetes-yaml).
 
 ```yaml
 podman_play_pod_authfile: ""
@@ -165,28 +150,11 @@ podman_play_pod_quiet: ""
 podman_play_pod_seccomp_profile_root: ""
 podman_play_pod_tls_verify: ""
 podman_play_pod_userns: ""
+podman_play_pod_quadlet_dir: ""
+podman_play_pod_quadlet_options: ""
 ```
 Additional variables related to the `podman_play_module`. Check the [module documentation](https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_play_module.html) for possible values.
 With these variables, you can modify pod deployment specifications.
-
-
-```yaml
-podman_play_systemd_after: ""
-podman_play_systemd_container_prefix: ""
-podman_play_systemd_env: ""
-podman_play_systemd_executable: ""
-podman_play_systemd_force: ""
-podman_play_systemd_pod_prefix: ""
-podman_play_systemd_requires: ""
-podman_play_systemd_separator: ""
-podman_play_systemd_start_timeout: ""
-podman_play_systemd_stop_timeout: ""
-podman_play_systemd_use_names: ""
-podman_play_systemd_wants: ""
-podman_play_systemd_new: ""
-```
-Additional variables related to the `podman_generate_systemd_module`. Check the [module documentation](https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_generate_systemd_module.html) for possible values.
-With these variables, you can modify pod systemd generation.
 
 ## Dependencies
 
