@@ -7,6 +7,7 @@ podman_play_root_dir: "/home/{{ podman_play_user | default(ansible_user_id) }}/{
 podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
 podman_play_pod_state: "quadlet"
 podman_play_pod_recreate: true
+podman_play_auto_update: false
 
 # REQUIRED - Variables
 # podman_play_pod_name: "dashy"
@@ -57,8 +58,6 @@ podman_play_pod_recreate: true
 #   - filename: "another_config.conf"
 #     raw_content: |
 #       # Example Raw Config for another_config.conf
-
-# podman_play_auto_update: true
 
 # More about possible values in https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_play_module.html
 # podman_play_pod_authfile: ""

@@ -111,6 +111,17 @@
     XDG_RUNTIME_DIR: "/run/user/{{ __user_info.uid | default(ansible_user_uid) }}"
   when: podman_play_auto_update | bool
 
+- name: Disable Podman auto update timer
+  ansible.builtin.systemd:
+    name: "podman-auto-update.timer"
+    state: "stopped"
+    scope: "user"
+    enabled: false
+  become_user: "{{ podman_play_user | default(ansible_user_id) }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ __user_info.uid | default(ansible_user_uid) }}"
+  when: not podman_play_auto_update | bool
+
 - name: Enable firewalld rule to expose app port
   ansible.posix.firewalld:
     immediate: true

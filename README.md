@@ -129,9 +129,10 @@ podman_play_firewalld_expose_ports:
 List of ports in `port/tcp` or `port/udp` format that should be exposed via firewalld.
 
 ```yaml
-podman_play_auto_update: true
+podman_play_auto_update: false
 ```
 If you're using image tags without specific versions, such as `latest` or `stable`, you can enable the auto-update feature. However, to activate this feature, you need to annotate the pod YAML definition with `io.containers.autoupdate: registry`. Without this annotation, the auto-update won't take effect. For more details on how it works, check out the [documentation](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html#auto-updates-and-kubernetes-yaml).
+When set to `false`, the auto-update feature is disabled. This feature is disabled by default.
 
 ```yaml
 podman_play_pod_authfile: ""
