@@ -183,6 +183,7 @@ podman_play_systemd_start_timeout: ""
 podman_play_systemd_stop_timeout: ""
 podman_play_systemd_use_names: ""
 podman_play_systemd_wants: ""
+podman_play_systemd_new: ""
 ```
 Additional variables related to the `podman_generate_systemd_module`. Check the [module documentation](https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_generate_systemd_module.html) for possible values.
 With these variables, you can modify pod systemd generation.
