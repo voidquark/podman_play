@@ -117,6 +117,7 @@
         stop_timeout: "{{ podman_play_systemd_stop_timeout | default(omit) }}"
         use_names: "{{ podman_play_systemd_use_names | default(omit) }}"
         wants: "{{ podman_play_systemd_wants | default(omit) }}"
+        new: "{{ podman_play_systemd_new | default(omit) }}"
       become_user: "{{ podman_play_user | default(ansible_user_id) }}"
       notify:
         - restart podman_play_app
