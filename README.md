@@ -62,6 +62,13 @@ podman_play_pod_name: "dashy"
 Specify your application pod name.
 
 ```yaml
+podman_play_pod_quadlet_options:
+  - "[Install]"
+  - "WantedBy=multi-user.target default.target"
+```
+These default Quadlet options ensure that the service starts on boot.
+
+```yaml
 podman_play_pod_yaml_definition: |
   ---
   apiVersion: v1
@@ -152,7 +159,6 @@ podman_play_pod_seccomp_profile_root: ""
 podman_play_pod_tls_verify: ""
 podman_play_pod_userns: ""
 podman_play_pod_quadlet_dir: ""
-podman_play_pod_quadlet_options: ""
 ```
 Additional variables related to the `podman_play_module`. Check the [module documentation](https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_play_module.html) for possible values.
 With these variables, you can modify pod deployment specifications.
