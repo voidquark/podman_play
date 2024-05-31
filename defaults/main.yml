@@ -8,6 +8,9 @@ podman_play_template_config_dir: "{{ podman_play_root_dir }}/template_configs"
 podman_play_pod_state: "quadlet"
 podman_play_pod_recreate: true
 podman_play_auto_update: false
+podman_play_pod_quadlet_options:
+  - "[Install]"
+  - "WantedBy=multi-user.target default.target"
 
 # REQUIRED - Variables
 # podman_play_pod_name: "dashy"
@@ -77,4 +80,3 @@ podman_play_auto_update: false
 # podman_play_pod_tls_verify: ""
 # podman_play_pod_userns: ""
 # podman_play_pod_quadlet_dir: ""
-# podman_play_pod_quadlet_options: ""
