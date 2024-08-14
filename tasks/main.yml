@@ -8,7 +8,7 @@
   block:
     - name: Create the app specific group
       ansible.builtin.group:
-        name: "{{ podman_play_group  }}"
+        name: "{{ podman_play_group }}"
         system: false
         state: present
 
@@ -89,7 +89,7 @@
     quadlet_filename: "{{ podman_play_pod_name }}"
     quadlet_options: "{{ podman_play_pod_quadlet_options | default(omit) }}"
     username: "{{ podman_play_pod_username | default(omit) }}"
-    quiet: "{{ podman_play_pod_quiet | default(omit ) }}"
+    quiet: "{{ podman_play_pod_quiet | default(omit) }}"
     recreate: "{{ podman_play_pod_recreate | default(omit) }}"
     seccomp_profile_root: "{{ podman_play_pod_seccomp_profile_root | default(omit) }}"
     state: "{{ podman_play_pod_state }}"

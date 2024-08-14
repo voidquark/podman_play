@@ -1,7 +1,7 @@
 ---
 # handlers file for podman_play
 
-- name: restart podman_play_app
+- name: Restart podman_play_app
   ansible.builtin.systemd:
     name: "{{ podman_play_pod_name }}.service"
     state: "restarted"
