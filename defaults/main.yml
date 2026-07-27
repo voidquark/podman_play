@@ -9,8 +9,9 @@ podman_play_pod_state: "quadlet"
 podman_play_pod_recreate: true
 podman_play_auto_update: false
 podman_play_pod_quadlet_options:
-  - "[Install]"
-  - "WantedBy=multi-user.target default.target"
+  - |
+    [Install]
+    WantedBy=multi-user.target default.target
 
 # REQUIRED - Variables
 # podman_play_pod_name: "dashy"
